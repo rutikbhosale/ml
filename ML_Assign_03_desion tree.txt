@@ -1,0 +1,78 @@
+**********ML exp-3 desion treee**************
+Step # 1 Importing the required libraries
+import pandas as pd
+import numpy as np
+import seaborn as sns 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+
+Step#2 loading the dataset
+
+data=pd.read_csv("C:/Users/rutik/Desktop/ML/Admission_Predict_Ver1.csv") 
+data.head()
+
+Step#3 Let’s check for useful information by applying pandas “info()” function
+data.info()
+
+Step#4 Let’s check for useful descriptive statistical values by applying pandas “describe()” function
+data.describe()
+
+Step#5 Let’s check for any missing or NA values in the training and testing data set
+data.isnull().sum()
+
+Step#6 Let’s print number of columns and rows i. e shape of dataset
+
+print("There are {} rows and {}columns.".format(data.shape[0],data.shape[1]))
+
+Step#7 let’s use drop () function and perform some basic data frame functions
+
+data= data.drop(['Serial No.'], axis=1)
+data
+
+data.info()
+
+data['Classlabel'].value_counts()
+
+data['SOP'].value_counts()
+
+print(data.Classlabel== 1)
+
+Step#8 Let’s Visualize SOP(attribute) data from dataset
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10,20));
+sns.countplot(data['SOP'].values);
+
+Step#9 Let’s split the dataset into two sub datasets “Training” and “Testing” Dataset
+
+feature_cols = ['GRE Score','TOEFL Score','University Rating','SOP','CGPA','Research']
+X = data[feature_cols] 
+y = data.Classlabel # Target variable
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+
+len(X_train)
+
+len(X_test)
+
+dtclf = DecisionTreeClassifier()
+dtclf = dtclf.fit(X_train,y_train)
+y_pred = dtclf.predict(X_test)
+print(y_pred)
+
+Step#11: Now let’s check how our model is doing on the testing data, which we kept aside for testing our model performance
+
+accuracy=metrics.accuracy_score(y_pred,y_test)*100
+print("Accuracy of the model is {:.2f}".format(accuracy))
+
+metrics.confusion_matrix(y_pred,y_test)
+
+pip install graphviz
+
+pip install pydotplus
+
+Step#12: Now Visualize the decision tree model
+
+from sklearn import tree
+tree.plot_tree(dtclf)
