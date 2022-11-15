@@ -10,7 +10,7 @@ import seaborn as sns
 Step#2 Loading the dataset
 
 trainData = pd.read_csv("C:/Users/rutik/Desktop/ML/temperatures.csv")
-trainData.head(n=10
+trainData.head(n=10)
 
 trainData.dtypes
 trainData.columns
