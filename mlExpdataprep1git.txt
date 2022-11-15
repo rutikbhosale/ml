@@ -1,0 +1,39 @@
+#importing labraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import hvplot.pandas
+from scipy import stats
+
+%matplotlib inline
+sns.set_style("whitegrid")
+plt.style.use("fivethirtyeight")
+
+#loading dataset
+data = pd.read_csv("C:/Users/rutik/Desktop/ML/heart.csv")
+data.head()
+
+#information about dataset
+data.info()
+
+#shape and size of dataset
+data.shap
+
+data.size
+
+#describing dataset
+data.describe()
+
+#cheak notnull values in dataset
+data.notnull()
+
+#priting values in dataset
+data.values
+
+#finding mean of age
+data["age"].mean()
+
+#finding any zeros in dataset
+data.isin([0]).any()
+(data==0).sum()
