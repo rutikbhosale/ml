@@ -18,7 +18,7 @@ data.head()
 data.info()
 
 #shape and size of dataset
-data.shap
+data.shape
 
 data.size
 
