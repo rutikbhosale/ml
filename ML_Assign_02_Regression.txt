@@ -1,0 +1,101 @@
+****ML expereriment2 regression********
+Step # 1 Importing the required libraries
+
+import numpy as np                   
+import pandas as pd                    
+import matplotlib.pyplot as plt
+from  sklearn.linear_model import LinearRegression 
+import seaborn as sns
+
+Step#2 Loading the dataset
+
+trainData = pd.read_csv("C:/Users/rutik/Desktop/ML/temperatures.csv")
+trainData.head(n=10
+
+trainData.dtypes
+trainData.columns
+
+Step#3 Let’s check for useful descriptive statistical values by applying pandas “describe()” function
+trainData.describe()
+
+Step#4 Let’s check for any missing or NA values in the training and testing data set
+trainData.isnull().sum()
+
+#step 5
+top_10_data = trainData.nlargest(10, "ANNUAL")
+plt.figure(figsize=(14,12))
+plt.title("Top 10 temperature records")
+sns.barplot(x=top_10_data.YEAR, y=top_10_data.ANNUAL)
+
+Step#6 Let’s define our dependent and independent variable for training and testing data
+from sklearn import linear_model, metrics
+trainData.columns
+
+X=trainData[["YEAR"]]
+Y=trainData[["JAN"]]
+
+Step#7 Let’s split the dataset into two sub datasets “Training” and “Testing” Dataset
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=1)
+
+len(X_train)
+
+len(X_test)
+
+trainData.shape
+
+reg = linear_model.LinearRegression()
+
+print(X_train
+
+Step#8 Let’s define the model and fit it.
+model = reg.fit(X_train, Y_train)
+r_sq = reg.score(X_train, Y_train)
+print("Determination coefficient:", r_sq)
+print('Intercept:', model.intercept_)
+print('Slope:', model.coef_)
+
+
+Y_pred = model.predict(X_test)
+print('predicted response:', Y_pred, sep='\n')
+
+Step#10: Now let’s visualise the regression equation fitment on the data
+Visualization on Training Data
+
+import seaborn as sns
+sns.set_theme()
+plt.scatter(X_train, Y_train, color='black')
+plt.plot(X_train, reg.predict(X_train), color='blue', linewidth=3)
+plt.title("Temperature vs Year")
+plt.xlabel("Year")
+plt.ylabel("Temperature")
+plt.show()
+
+Step#11: Now let’s check how our model is doing on the testing data, which we kept aside for testing our model performance
+Visualization on Testing Data
+
+plt.scatter(X_test, Y_test, color='red')
+plt.plot(X_test, reg.predict(X_test), color='black', linewidth=3)
+plt.title("Temperature vs Year")
+plt.xlabel("Year")
+plt.ylabel("Temperature")
+plt.show()
+
+Step # 12: Assess the performance of regression models using MSE, MAE and R-Square metrics
+mse = np.sum((Y_pred - Y_test)**2)    # mean squared error (MSE)
+rmse = np.sqrt(mse/24)                         # root mean squared error (RMSE)
+print("Mean Squared Error(MSE):", mse)
+print("Root Mean Squared Error(RMSE):", rmse)
+
+SSR = np.sum((Y_pred - Y_test)**2)   #Sum of square of Residuals/Errors SSR/SSE
+
+SST = np.sum((Y_test - np.mean(Y_test))**2)    #  total sum of squares
+
+
+r2_score = 1 - (SSR/SST)    # R2 score
+
+print('SST:', SST)
+print('SSR', SSR)
+print('R2 square:', r2_score)
+
